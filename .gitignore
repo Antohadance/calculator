@@ -30,6 +30,4 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
-/src/main/java/com/example/calculator/CalculatorApplication.java
-/src/main/java/calculator/CalculatorApplicationTests.java
+

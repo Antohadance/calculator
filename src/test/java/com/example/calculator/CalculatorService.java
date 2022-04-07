@@ -1,32 +1,12 @@
 package com.example.calculator;
 
-import org.springframework.stereotype.Service;
+public interface CalculatorService {
 
-public class CalculatorService {
-    public String Calculator() {
-        return "<b><i>Добро пожаловать в калькулятор</i></b>";
-    }
-public String CalculatorPlus(Integer num1, Integer num2) {
-        int sum = num1 + num2;
-        return num1 + "+" + num2 + "=" + sum;
-    }
+    int sum(int num1, int num2);
 
-    public String CalculatorMinus(Integer num1, Integer num2) {
-        int minus = num1 - num2;
-        return num1 + "-" + num2 + "=" + minus;
-    }
+    int subtract(int num1, int num2);
 
-    public String CalculatorMultiply(Integer num1, Integer num2) {
-        int multiply = num1 * num2;
-        return num1 + "*" + num2 + "=" + multiply;
-    }
+    int multiply(int num1, int num2);
 
-    public String CalculatorDivide(Integer num1, Integer num2) {
-        if (num2 == 0) {
-            return "Деление на 0 запрещено!";
-        } else {
-            int divide = num1 / num2;
-            return num1 + "/" + num2 + "=" + divide;
-        }
-    }
+    int divide(int num1, int num2);
 }
