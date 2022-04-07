@@ -1,39 +1,53 @@
 package com.example.calculator;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class CalculatorController {
-    private CalculatorServiсe calculatorServiсe = new CalculatorServiсe();
 
-    public CalculatorController(CalculatorServiсe calculatorServiсe) {
-        this.calculatorServiсe = calculatorServiсe;
+@RestController
+@RequestMapping("/calculator")
+public class CalculatorController {
+    private final CalculatorService calculatorService;
+
+    public CalculatorController(CalculatorService calculatorService) {
+        this.calculatorService = calculatorService;
     }
 
     @GetMapping(path = "/calculator")
-    public String Calculator() {
-        return calculatorServiсe.Calculator();
+    public String showGreetings() {
+        return "<h1>Добро пожаловать в калькулятор.</h1>";
     }
 
-    @GetMapping(path = "/calculator/plus")
-    public String CalculatorPlus(@RequestParam("num1") Integer num1, @RequestParam("num2") Integer num2) {
-        return calculatorServiсe.CalculatorPlus(num1, num2);
+    @GetMapping(path = "/plus")
+    public String sumNumbers(@RequestParam int num1, @RequestParam int num2) {
+        int result = calculatorService.sum(num1, num2);
+        return generateMassage(num1, num2, '+', result);
     }
 
-    @GetMapping(path = "/calculator/minus")
-    public String CalculatorMinus(@RequestParam("num1") Integer num1, @RequestParam("num2") Integer num2) {
-        return calculatorServiсe.CalculatorMinus(num1, num2);
+    @GetMapping(path = "/minus")
+    public String subtractNumbers(@RequestParam int num1, @RequestParam int num2) {
+        int result = calculatorService.sum(num1, num2);
+        return generateMassage(num1, num2, '-', result);
     }
 
-    @GetMapping(path = "/calculator/multiply")
-    public String CalculatorMultiply(@RequestParam("num1") Integer num1, @RequestParam("num2") Integer num2) {
-        return calculatorServiсe.CalculatorMultiply(num1, num2);
+    @GetMapping(path = "/multiply")
+    public String multiplyNumbers(@RequestParam int num1, @RequestParam int num2) {
+        int result = calculatorService.sum(num1, num2);
+        return generateMassage(num1, num2, '*', result);
     }
 
-    @GetMapping(path = "/calculator/divide")
-    public String CalculatorDivide(@RequestParam("num1") Integer num1, @RequestParam("num2") Integer num2) {
-        return calculatorServiсe.CalculatorDivide(num1, num2);
+    @GetMapping(path = "/divide")
+    public String divideNumbers(@RequestParam int num1, @RequestParam int num2) {
+        if (num2 == 0){
+            return "<h>Второй аргумент равен 0. Деление на 0 невозможно.</h1>";
+        }
+        int result = calculatorService.divide(num1, num2);
+        return generateMassage(num1, num2, '/', result);
+    }
+
+    public String generateMassage(int num1, int num2, char action, int result) {
+        return String.format("<h1>%d %c %d = %d</h1>", num1, action, num2, result);
     }
 }
